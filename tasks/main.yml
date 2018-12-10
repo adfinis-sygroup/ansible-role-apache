@@ -1,0 +1,72 @@
+---
+- name: include os specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags:
+    - 'role::apache'
+    - 'role::apache:install'
+    - 'role::apache:config'
+
+- name: define apache packages
+  set_fact:
+    apache_packages: "{{ __apache_packages | list }}"
+  when: apache_packages is not defined
+  tags:
+    - 'role::apache'
+    - 'role::apache:install'
+    - 'role::apache:config'
+
+- name: install apache
+  include_tasks: "installation-{{ ansible_os_family }}.yml"
+  tags:
+    - 'role::apache'
+    - 'role::apache:install'
+
+- name: get installed apache version
+  command: "{{ apache_daemon_path }}{{ apache_daemon }} -v"
+  changed_when: false
+  check_mode: false
+  register: _apache_register_version
+  tags:
+    - 'role::apache'
+    - 'role::apache:install'
+    - 'role::apache:config'
+
+- name: create apache version variable
+  set_fact:
+    apache_version: "{{ _apache_register_version.stdout.split()[2].split('/')[1] }}"
+  tags:
+    - 'role::apache'
+    - 'role::apache:install'
+    - 'role::apache:config'
+
+- name: include apache 2.2 variables
+  include_vars: apache-22.yml
+  when: "apache_version.split('.')[1] == '2'"
+  tags:
+    - 'role::apache'
+    - 'role::apache:install'
+    - 'role::apache:config'
+
+- name: include apache 2.4 variables
+  include_vars: apache-24.yml
+  when: "apache_version.split('.')[1] == '4'"
+  tags:
+    - 'role::apache'
+    - 'role::apache:install'
+    - 'role::apache:config'
+
+- name: configure apache
+  include_tasks: "configuration-{{ ansible_os_family }}.yml"
+  tags:
+    - 'role::apache'
+    - 'role::apache:config'
+
+- name: ensure apache has selected state and enabled on boot
+  service:
+    name: "{{ apache_service }}"
+    state: "{{ apache_state }}"
+    enabled: true
+  tags:
+    - 'role::apache'
+    - 'role::apache:install'
+    - 'role::apache:config'

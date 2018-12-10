@@ -1,0 +1,8 @@
+---
+- name: install apache on rhel
+  package:
+    name: "{{ apache_packages }}"
+    state: "{{ apache_packages_state }}"
+  tags:
+    - 'role::apache'
+    - 'role::apache:install'
