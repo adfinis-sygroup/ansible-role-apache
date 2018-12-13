@@ -3,3 +3,8 @@
   service:
     name: "{{ apache_service }}"
     state: restarted
+
+- name: apache remove default vhost
+  file:
+    path: '{{ apache_conf_path }}/sites-enabled/{{ apache_default_vhost_filename }}'
+    state: absent

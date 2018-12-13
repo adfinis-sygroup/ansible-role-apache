@@ -40,10 +40,3 @@
     state: link
   notify: restart apache
   when: apache_create_vhosts
-
-- name: remove default vhost in sites-enabled
-  file:
-    path: "{{ apache_conf_path }}/sites-enabled/{{ apache_default_vhost_filename }}"
-    state: absent
-  notify: restart apache
-  when: apache_remove_default_vhost

@@ -4,3 +4,5 @@
 
 - name: install apache on debian
   apt: "name={{ apache_packages }} state={{ apache_packages_state }}"
+  notify:
+    - 'apache remove default vhost'
