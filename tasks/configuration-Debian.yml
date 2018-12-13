@@ -7,9 +7,6 @@
     state: present
   with_items: "{{ apache_ports_configuration_items }}"
   notify: restart apache
-  tags:
-    - 'role::apache'
-    - 'role::apache:config'
 
 - name: enable apache mods
   file:
@@ -18,9 +15,6 @@
     state: link
   with_items: "{{ apache_mods_enabled }}"
   notify: restart apache
-  tags:
-    - 'role::apache'
-    - 'role::apache:config'
 
 - name: disable apache mods
   file:
@@ -28,9 +22,6 @@
     state: absent
   with_items: "{{ apache_mods_disabled }}"
   notify: restart apache
-  tags:
-    - 'role::apache'
-    - 'role::apache:config'
 
 - name: add apache vhosts configuration
   template:
@@ -41,9 +32,6 @@
     mode: 0644
   notify: restart apache
   when: apache_create_vhosts
-  tags:
-    - 'role::apache'
-    - 'role::apache:config'
 
 - name: add vhost symlink in sites-enabled
   file:
@@ -52,9 +40,6 @@
     state: link
   notify: restart apache
   when: apache_create_vhosts
-  tags:
-    - 'role::apache'
-    - 'role::apache:config'
 
 - name: remove default vhost in sites-enabled
   file:
@@ -62,6 +47,3 @@
     state: absent
   notify: restart apache
   when: apache_remove_default_vhost
-  tags:
-    - 'role::apache'
-    - 'role::apache:config'
