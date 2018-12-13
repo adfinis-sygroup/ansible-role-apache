@@ -25,7 +25,7 @@
   command: "{{ apache_daemon_path }}{{ apache_daemon }} -v"
   changed_when: false
   check_mode: false
-  register: _apache_register_version
+  register: apache_register_version
   tags:
     - 'role::apache'
     - 'role::apache:install'
@@ -33,7 +33,7 @@
 
 - name: create apache version variable
   set_fact:
-    apache_version: "{{ _apache_register_version.stdout.split()[2].split('/')[1] }}"
+    apache_version: "{{ apache_register_version.stdout.split()[2].split('/')[1] }}"
   tags:
     - 'role::apache'
     - 'role::apache:install'
