@@ -2,6 +2,15 @@
 ROLE APACHE
 ===========
 
+.. image:: https://img.shields.io/github/license/adfinis-sygroup/ansible-role-apache.svg?style=flat-square
+  :target: https://github.com/adfinis-sygroup/ansible-role-apache/blob/master/LICENSE
+
+.. image:: https://img.shields.io/travis/adfinis-sygroup/ansible-role-apache.svg?style=flat-square
+  :target: https://github.com/adfinis-sygroup/ansible-role-apache
+
+.. image:: https://img.shields.io/badge/galaxy-adfinis--sygroup.apache-660198.svg?style=flat-square
+  :target: https://galaxy.ansible.com/adfinis-sygroup/apache
+
 A brief description of the role goes here.
 
 
