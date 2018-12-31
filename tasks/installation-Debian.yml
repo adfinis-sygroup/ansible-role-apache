@@ -1,12 +1,8 @@
 ---
 - name: update apt cache
   apt: update_cache=yes cache_valid_time=3600
-  tags:
-    - 'role::apache'
-    - 'role::apache:install'
 
 - name: install apache on debian
   apt: "name={{ apache_packages }} state={{ apache_packages_state }}"
-  tags:
-    - 'role::apache'
-    - 'role::apache:install'
+  notify:
+    - 'apache remove default vhost'
