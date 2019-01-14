@@ -6,7 +6,7 @@
     line: "{{ item.line }}"
     state: present
   with_items: "{{ apache_ports_configuration_items }}"
-  notify: restart apache
+  notify: apache restart daemon
 
 - name: add apache vhosts configuration
   template:
@@ -15,5 +15,5 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart apache
+  notify: apache restart daemon
   when: apache_create_vhosts
