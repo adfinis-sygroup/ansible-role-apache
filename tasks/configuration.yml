@@ -1,27 +1,20 @@
 ---
-- name: configure apache
-  lineinfile:
-    dest: "{{ apache_server_root }}/ports.conf"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-    state: present
-  with_items: "{{ apache_ports_configuration_items }}"
-  notify: apache restart daemon
 
-- name: enable apache mods
+- name: remove default vhost
+  file:
+    path: '{{ apache_conf_path }}/sites-enabled/{{ apache_default_vhost_filename }}'
+    state: absent
+  notify: apache restart daemon
+  when: apache_default_vhost_filename is defined
+
+- name: symlink apache mods
   file:
     src: "{{ apache_server_root }}/mods-available/{{ item }}"
     dest: "{{ apache_server_root }}/mods-enabled/{{ item }}"
     state: link
   with_items: "{{ apache_mods_enabled }}"
   notify: apache restart daemon
-
-- name: disable apache mods
-  file:
-    path: "{{ apache_server_root }}/mods-enabled/{{ item }}"
-    state: absent
-  with_items: "{{ apache_mods_disabled }}"
-  notify: apache restart daemon
+  when: apache_mod_symlinks
 
 - name: add apache vhosts configuration
   template:
@@ -31,12 +24,28 @@
     group: root
     mode: 0644
   notify: apache restart daemon
-  when: apache_create_vhosts
+  when: apache_vhost_symlinks
 
-- name: add vhost symlink in sites-enabled
+- name: symlink vhosts
   file:
     src: "{{ apache_conf_path }}/sites-available/{{ apache_vhosts_filename }}"
     dest: "{{ apache_conf_path }}/sites-enabled/{{ apache_vhosts_filename }}"
     state: link
   notify: apache restart daemon
-  when: apache_create_vhosts
+  when: apache_vhost_symlinks
+
+- name: add apache vhosts configuration
+  template:
+    src: "{{ apache_vhosts_template }}"
+    dest: "{{ apache_conf_path }}/{{ apache_vhosts_filename }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: apache restart daemon
+  when: not apache_vhost_symlinks
+
+- name: enable and start apache
+  service:
+    name: "{{ apache_service }}"
+    state: started
+    enabled: true
