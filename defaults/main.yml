@@ -19,7 +19,7 @@ apache_vhosts:
     # Enable to redirect to SSL enabled vhost below
     # redirect_ssl: false
 
-apache_vhosts_ssl:
+apache_vhosts_ssl: []
 #  - servername: 'localhost'
 #    documentroot: '/var/www/html'
 #    certificate_file: '/etc/ssl/certs/wildcard_chain.crt'
