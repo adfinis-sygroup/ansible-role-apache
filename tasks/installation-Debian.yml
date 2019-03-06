@@ -1,8 +1,0 @@
----
-- name: update apt cache
-  apt: update_cache=yes cache_valid_time=3600
-
-- name: install apache on debian
-  apt: "name={{ apache_packages }} state={{ apache_packages_state }}"
-  notify:
-    - 'apache remove default vhost'
