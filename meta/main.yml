@@ -13,16 +13,9 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
-        - wheezy
-        - jessie
         - stretch
-    - name: Ubuntu
-      versions:
-        - trusty
-        - xenial
     - name: EL
       versions:
-        - 6
         - 7
   galaxy_tags:
     - apache
