@@ -5,6 +5,9 @@
 {% for vhost in apache_vhosts %}
 <VirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}>
   ServerName {{ vhost.servername }}
+{% if vhost.serveradmin is defined %}
+  ServerAdmin {{ vhost.serveradmin }}
+{% endif %}
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}
 {% endif %}
@@ -31,6 +34,9 @@
 {% for vhost in apache_vhosts_ssl %}
 <VirtualHost {{ apache_listen_ip }}:{{ apache_listen_port_ssl }}>
   ServerName {{ vhost.servername }}
+{% if vhost.serveradmin is defined %}
+  ServerAdmin {{ vhost.serveradmin }}
+{% endif %}
 {% if vhost.serveralias is defined %}
   ServerAlias {{ vhost.serveralias }}
 {% endif %}

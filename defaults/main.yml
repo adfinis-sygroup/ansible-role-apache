@@ -12,6 +12,8 @@ apache_global_vhost_settings: |
   DirectoryIndex index.php index.html
 apache_vhosts:
   - servername: "localhost"
+    # server admin email
+    serveradmin: 'www-admin@foo.example.com'
     documentroot: "/var/www/html"
     # Enable to redirect to SSL enabled vhost below
     # redirect_ssl: false
@@ -23,6 +25,8 @@ apache_options: "-Indexes +FollowSymLinks"
 
 apache_vhosts_ssl: []
 # - servername: "localhost"
+#   # server admin email
+#   serveradmin: 'www-admin@foo.example.com'
 #   documentroot: "/var/www/html"
 #   certificate_file: "/etc/ssl/certs/wildcard_chain.crt"
 #   certificate_key_file: "/etc/ssl/private/adfinis-sygroup.ch.key"
