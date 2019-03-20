@@ -31,6 +31,24 @@ that can/should be set via parameters to the role. Any variables that are read
 from other roles and/or the global scope (ie. hostvars, group vars, etc.)
 should be mentioned here as well.
 
+Additional Parameters
+---------------------
+Any configuration directive not covered by the variables above can be appended
+to the ``apache_vhosts.extra_options`` and ``apache_vhosts_ssl.extra_options``
+variables using a `literal block scalar
+<https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html>`_
+as follows:
+
+.. code-block:: yaml
+
+  extra_options: |
+    <Location "/status">
+      SetHandler server-status
+      Require host example.com
+    </Location>
+
+These extra options are appended right before the closing
+``<VirtualHost>`` section.
 
 Dependencies
 =============

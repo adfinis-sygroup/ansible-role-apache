@@ -21,6 +21,9 @@
     Require all granted
   </Directory>
 {% endif %}
+{% if vhost.extra_options is defined %}
+  {{ vhost.extra_options }}
+{% endif %}
 </VirtualHost>
 
 {% endfor %}
@@ -52,6 +55,9 @@
     Options {{ vhost.options | default(apache_options) }}
     Require all granted
   </Directory>
+{% endif %}
+{% if vhost.extra_options is defined %}
+  {{ vhost.extra_options }}
 {% endif %}
 </VirtualHost>
 {% endfor %}
