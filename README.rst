@@ -25,7 +25,64 @@ may be a good idea to mention in this section that the boto package is required.
 Role Variables
 ===============
 
+Listen IP and port:
+
+* ``apache_listen_ip``: The IP to listen on
+* ``apache_listen_port``: Port to listen on for non-SSL vhosts
+* ``apache_listen_port_ssl``: Listen port vor SSL vhosts
+
+Vhost configuration files:
+
+* ``apache_vhosts_filename``: Name of the vhost configuration file created on
+  the host
+* ``apache_vhosts_template``: Name of the vhost configuration template in the
+  ansible ``templates`` directory
+
+Vhost default options (applies to all vhosts unless overriden):
+
+* ``apache_allow_override``: Default ``allow_override`` setting to allow overrides
+  in ``.htaccess`` files
+* ``apache_options``: Default apache options that can be overridden in a particular
+  vhost configuration
+
+``apache_vhosts`` defines all Apache virtual hosts (non-ssl vhost). Each vhost contains
+the required variable ``servername`` to uniquely identify the vhost. All other
+variables are optional and defined as follows:
+
+* ``serveralias``: Alias or alternative name for the host
+* ``documentroot``: Main document tree
+* ``redirect_ssl``: Redirect to SSL enabled vhost
+* ``options``: Vhost apache options that override the default options of the
+  global variable ``apache_options``
 * ``serveradmin``: Email address of server admin
+
+SSL Variables
+-------------
+
+``apache_vhosts_ssl`` defines all SSL-enabled Apache virtual hosts, supporting
+the same variables as ``apache_vhosts`` (except for ``redirect_ssl``).
+Additionally, SSL key and certificate need to be specified.
+
+SSL variables specific to a vhost in ``apache_vhosts_ssl``:
+
+* ``certificate_file``: SSL certificate and chain file
+* ``certificate_key_file``: SSL key file
+* ``certificate_chain_file``: Separate chain file, deprecated since apache 2.4.8
+
+Global SSL variables (not vhost specific):
+
+* ``apache_ssl_protocol``: Allowed SSL protocol versions
+* ``apache_ssl_cipher_suite``: Allowed SSL cipher suites
+
+Modules
+-------
+
+The playbook creates module symlinks into the ``/etc/apache2/mods-enabled/``
+directory for Debian based hosts. Modules listed in ``apache_mods_enabled`` ar
+enabled by default:
+
+* ``rewrite.load``: Rewrite module
+* ``ssl.load``: SSL module
 
 Additional Parameters
 ---------------------
@@ -49,10 +106,7 @@ These extra options are appended right before the closing
 Dependencies
 =============
 
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables
-that are used from other roles.
-
+* Role: `adfinis-sygroup.pki <https://github.com/adfinis-sygroup/ansible-role-pki>`_
 
 Example Playbook
 =================
