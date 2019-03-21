@@ -37,6 +37,8 @@ apache_vhosts:
     # vhost name (required)
   - servername: 'localhost'
     # # vhost alias, alternative name for the host (optional)
+    # server admin email
+    serveradmin: 'www-admin@foo.example.com'
     # serveralias: 'localhost'
     # document root, main document tree (optional)
     documentroot: '/var/www/html'
@@ -44,11 +46,15 @@ apache_vhosts:
     # redirect_ssl: false
     # # vhost options, override 'apache_options' (optional)
     # options: '+FollowSymLinks'
+    # add directives not covered by any variables
+    #   apache_extra_options: |
 
 # ssl vhosts, none by default
 apache_vhosts_ssl: []
 #    # vhost name (required)
 #  - servername: 'localhost'
+#   # server admin email
+#   serveradmin: 'www-admin@foo.example.com'
 #    # document root, main document tree (optional)
 #    documentroot: '/var/www/html'
 #    # certificate file (required)
@@ -57,6 +63,8 @@ apache_vhosts_ssl: []
 #    certificate_key_file: '/etc/ssl/private/adfinis-sygroup.ch.key'
 #    # certificate chain (optional, deprecated)
 #    certificate_chain_file: '/etc/ssl/certs/chain.pem'
+#    # add directives not covered by any variables
+#    apache_extra_options: |
 
 # allowed ssl protocol versions
 apache_ssl_protocol: 'All -SSLv2 -SSLv3'
@@ -67,3 +75,11 @@ apache_ssl_cipher_suite: 'AES256+EECDH:AES256+EDH'
 apache_mods_enabled:
   - rewrite.load
   - ssl.load
+apache_mods_disabled: []
+
+# Set initial apache state. Recommended values: `started` or `stopped`
+apache_state: started
+
+# Apache package state; use `present` to make sure it's installed, or `latest`
+# if you want to upgrade or switch versions using a new repo.
+apache_packages_state: present

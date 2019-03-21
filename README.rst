@@ -54,6 +54,7 @@ variables are optional and defined as follows:
 * ``redirect_ssl``: Redirect to SSL enabled vhost
 * ``options``: Vhost apache options that override the default options of the
   global variable ``apache_options``
+* ``serveradmin``: Email address of server admin
 
 SSL Variables
 -------------
@@ -82,6 +83,25 @@ enabled by default:
 
 * ``rewrite.load``: Rewrite module
 * ``ssl.load``: SSL module
+
+Additional Parameters
+---------------------
+Any configuration directive not covered by the variables above can be appended
+to the ``apache_vhosts.extra_options`` and ``apache_vhosts_ssl.extra_options``
+variables using a `literal block scalar
+<https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html>`_
+as follows:
+
+.. code-block:: yaml
+
+  extra_options: |
+    <Location "/status">
+      SetHandler server-status
+      Require host example.com
+    </Location>
+
+These extra options are appended right before the closing
+``<VirtualHost>`` section.
 
 Dependencies
 =============
