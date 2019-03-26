@@ -8,5 +8,7 @@
 
 - name: install apache related packages
   package:
-    name: '{{ apache_packages }}'
     state: present
+  loop:
+    - '{{ apache_packages }}'
+    - '{{ apache_additional_packages }}'
