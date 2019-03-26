@@ -47,14 +47,14 @@ apache_vhosts:
     # # vhost options, override 'apache_options' (optional)
     # options: '+FollowSymLinks'
     # add directives not covered by any variables
-    #   apache_extra_options: |
+    #   extra_options: |
 
 # ssl vhosts, none by default
 apache_vhosts_ssl: []
 #    # vhost name (required)
 #  - servername: 'localhost'
-#   # server admin email
-#   serveradmin: 'www-admin@foo.example.com'
+#    # server admin email
+#    serveradmin: 'www-admin@foo.example.com'
 #    # document root, main document tree (optional)
 #    documentroot: '/var/www/html'
 #    # certificate file (required)
@@ -64,7 +64,7 @@ apache_vhosts_ssl: []
 #    # certificate chain (optional, deprecated)
 #    certificate_chain_file: '/etc/ssl/certs/chain.pem'
 #    # add directives not covered by any variables
-#    apache_extra_options: |
+#    extra_options: |
 
 # allowed ssl protocol versions
 apache_ssl_protocol: 'All -SSLv2 -SSLv3'
