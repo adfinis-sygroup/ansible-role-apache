@@ -78,12 +78,38 @@ Global SSL variables (not vhost specific):
 Modules
 -------
 
-The playbook creates module symlinks into the ``/etc/apache2/mods-enabled/``
-directory for Debian based hosts. Modules listed in ``apache_mods_enabled`` ar
-enabled by default:
+By default, the role `installs <#installation-of-additional-modules>`_ no
+additional modules. Rewrite (``rewrite.load``) and SSL (``ssl.load``) are the
+only modules `enabled <#enabling-additional-modules-debian>`_ by default on
+Debian based hosts.
+
+Installation of additional modules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To install additional modules use the list ``apache_additional_packages``. For
+instance, you can add support for the ``mod_auth_openidc`` module with this
+variable as follows:
+
+.. code-block:: yaml
+
+  apache_additional_packages:
+    - mod_auth_openidc
+
+Enabling additional modules (Debian)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The playbook can create module symlinks into the ``/etc/apache2/mods-enabled/``
+directory for Debian based hosts. To symlink and enable a module on Debian based
+hosts, add the module to ``apache_mods_enabled``. On Centos/RHEL, all modules
+installed with ``apache_additional_packages`` are enabled by default, in
+addition to the OS-defaults.
+
+This role was tested with following modules in ``apache_mods_enabled``:
 
 * ``rewrite.load``: Rewrite module
 * ``ssl.load``: SSL module
+* ``auth_openidc.load``: `OpenID Connect Relying Party and OAuth 2.0 Resource
+  Server <https://github.com/zmartzone/mod_auth_openidc/>`_
 
 Additional Parameters
 ---------------------
