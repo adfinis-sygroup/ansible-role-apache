@@ -44,6 +44,8 @@ apache_vhosts:
     documentroot: '/var/www/html'
     # # redirect to SSL enabled vhost below (optional)
     # redirect_ssl: false
+    # If you don't have an listen_ip configured, you can manually set the vhost to redirect to here
+    #redirect_ssl_vhost: 'https://example.com'
     # # vhost options, override 'apache_options' (optional)
     # options: '+FollowSymLinks'
     # add directives not covered by any variables

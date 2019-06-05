@@ -52,6 +52,7 @@ variables are optional and defined as follows:
 * ``serveralias``: Alias or alternative name for the host
 * ``documentroot``: Main document tree
 * ``redirect_ssl``: Redirect to SSL enabled vhost
+* ``redirect_ssl_vhost``: Redirect to this enabled vhost
 * ``options``: Vhost apache options that override the default options of the
   global variable ``apache_options``
 * ``serveradmin``: Email address of server admin
