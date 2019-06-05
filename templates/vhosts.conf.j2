@@ -15,7 +15,11 @@
   DocumentRoot "{{ vhost.documentroot }}"
 {% endif %}
 {% if vhost.redirect_ssl | default(false) %}
+{% if vhost.redirect_ssl_vhost is defined %}
+  Redirect permanent / {{ vhost.redirect_ssl_vhost }}
+{% else %}
   Redirect permanent / https://{{ apache_listen_ip }}:{{ apache_listen_port_ssl }}
+{% endif %}
 {% endif %}
 {% if vhost.documentroot is defined %}
   <Directory "{{ vhost.documentroot }}">
